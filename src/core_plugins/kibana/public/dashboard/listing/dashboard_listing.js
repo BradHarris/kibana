@@ -1,6 +1,7 @@
 import SavedObjectRegistryProvider from 'ui/saved_objects/saved_object_registry';
 import 'ui/pager_control';
 import 'ui/pager';
+import chrome from 'ui/chrome';
 import { DashboardConstants } from '../dashboard_constants';
 import _ from 'lodash';
 
@@ -71,6 +72,8 @@ export function DashboardListingController($injector, $scope) {
     deselectAll();
     fetchItems();
   });
+
+  $scope.isFullScreenMode = !chrome.getVisible();
 
   /**
    * Boolean that keeps track of whether hits are sorted ascending (true)

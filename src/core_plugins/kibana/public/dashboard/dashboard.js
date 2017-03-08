@@ -309,7 +309,7 @@ app.directive('dashboardApp', function (Notifier, courier, AppState, timefilter,
       init();
 
       $scope.showEditHelpText = () => {
-        return !$scope.state.panels.length;
+        return !$scope.state.panels.length && chrome.getVisible();
       };
     }
   };
