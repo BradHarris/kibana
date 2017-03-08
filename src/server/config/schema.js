@@ -51,8 +51,8 @@ module.exports = () => Joi.object({
     port: Joi.number().default(5601),
     maxPayloadBytes: Joi.number().default(1048576),
     autoListen: Joi.boolean().default(true),
-    defaultRoute: Joi.string().default('/app/kibana').regex(/^\//, `start with a slash`),
-    basePath: Joi.string().default('').allow('').regex(/(^$|^\/.*[^\/]$)/, `start with a slash, don't end with one`),
+    defaultRoute: Joi.string().default('/app/kibana').regex(/^\//, 'start with a slash'),
+    basePath: Joi.string().default('').allow('').regex(/(^$|^\/.*[^\/]$)/, 'start with a slash, don\'t end with one'),
     ssl: Joi.object({
       enabled: Joi.boolean().default(false),
       certificate: Joi.string().when('enabled', {
@@ -201,7 +201,8 @@ module.exports = () => Joi.object({
     // require the elasticsearch plugin in order to function we need to turn
     // them off when we turn off the elasticsearch plugin (like we do in the
     // optimizer half of the dev server)
-    enabled: Joi.boolean().default(true)
+    enabled: Joi.boolean().default(true),
+    postMessageTarget: Joi.string()
   }).default(),
 
   i18n: Joi.object({

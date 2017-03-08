@@ -2,100 +2,93 @@ extends ./chrome.jade
 
 block content
   style.
-    * {
-      box-sizing: border-box;
-    }
-
-    body, html {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-    }
-
-    .kibanaLoader {
-      display: -webkit-box;
-      display: -webkit-flex;
-      display: -ms-flexbox;
+    .loader-container {
       display: flex;
-      width: 620px;
-      height: 185px;
-      padding: 0;
+      align-items: center;
+      justify-content: center;
+      flex-flow: column nowrap;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      background-color: rgba(255, 255, 255, 0.5);
+      user-select: none;
+      cursor: default;
+    }
+
+    .loader-waiting {
+      cursor: wait;
+    }
+
+    .loader {
       text-align: center;
-      background: #3caed2;
+      color: $b42;
     }
 
-    .kibanaLoader__logo {
-      width: 150px;
-      height: 100%;
-      padding: 20px;
-      background-color: #E8488B;
-      -webkit-animation: colorShift 3s infinite;
-              animation: colorShift 3s infinite;
-      box-shadow: inset -10px 0 20px -10px rgba(0, 0, 0, 0.5);
+    .loader-loading {
+      position: absolute;
+      top: calc(50% - 3em);
+      left: calc(50% - 3em);
+
+      font-size: 10px;
+      text-indent: -9999em;
+      border-top: 0.3em solid #ff5000;
+      border-right: 0.3em solid transparent;
+      border-bottom: 0.3em solid #ff5000;
+      border-left: 0.3em solid transparent;
+      animation: loadSpinner 1s infinite linear;
+      border-radius: 50%;
+      width: 6em;
+      height: 6em;
+
+      &:after {
+        border-radius: 50%;
+        width: 6em;
+        height: 6em;
+      }
     }
 
-    .kibanaLoader__content {
-      display: -webkit-box;
-      display: -webkit-flex;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: center;
-      -webkit-align-items: center;
-          -ms-flex-align: center;
-              align-items: center;
-      -webkit-box-pack: center;
-      -webkit-justify-content: center;
-          -ms-flex-pack: center;
-              justify-content: center;
-      -webkit-box-flex: 1;
-      -webkit-flex: 1 1 auto;
-          -ms-flex: 1 1 auto;
-              flex: 1 1 auto;
-      color: white;
-      font-size: 38px;
-      font-weight: 300;
-      font-family: "Open Sans", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      padding-bottom: 12px;
-    }
-
-    @-webkit-keyframes colorShift {
+    @keyframes loadSpinner {
       0% {
-        background-color: #DD4484;
-      }
-      33% {
-        background-color: #E4BB51;
-      }
-      66% {
-        background-color: #8AC336;
+        transform: rotate(0deg);
       }
       100% {
-        background-color: #DD4484;
-      }
-    }
-
-    @keyframes colorShift {
-      0% {
-        background-color: #DD4484;
-      }
-      33% {
-        background-color: #E4BB51;
-      }
-      66% {
-        background-color: #8AC336;
-      }
-      100% {
-        background-color: #DD4484;
+        transform: rotate(360deg);
       }
     }
 
   .kibanaWelcomeView
-    .kibanaLoader
-      .kibanaLoader__logo
-        .kibanaWelcomeLogo
-      .kibanaLoader__content
-        | #{i18n('UI-WELCOME_MESSAGE')}
+    //- .kibanaLoader
+    //-   .kibanaLoader__logo
+    //-     .kibanaWelcomeLogo
+    //-   .kibanaLoader__content
+    //-     | #{i18n('UI-WELCOME_MESSAGE')}
+
+    .loader-container
+      .loader
+        .loader-loading
 
   script.
+    const postMessageTarget = '#{kibanaPayload.postMessageTarget}';
+
+    if (postMessageTarget) {
+      var targetWindow;
+      window.addEventListener('message', function(e) {
+        if (e.origin !== postMessageTarget) {
+          return;
+        }
+
+        targetWindow = e.source;
+      }, false);
+
+      window.onpopstate = function(e) {
+        if (targetWindow && targetWindow.postMessage) {
+          targetWindow.postMessage(window.location.hash, postMessageTarget);
+        }
+      }
+    }
+
     window.onload = function () {
       var buildNum = #{kibanaPayload.buildNum};
       var cacheParam = buildNum ? '?v=' + buildNum : '';
