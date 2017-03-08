@@ -1,6 +1,7 @@
 import { SavedObjectRegistryProvider } from 'ui/saved_objects/saved_object_registry';
 import 'ui/pager_control';
 import 'ui/pager';
+import chrome from 'ui/chrome';
 import { DashboardConstants, createDashboardEditUrl } from '../dashboard_constants';
 import { SortableProperties } from 'ui_framework/services';
 import { ConfirmationButtonTypes } from 'ui/modals';
@@ -78,6 +79,8 @@ export function DashboardListingController($injector, $scope) {
   });
   this.isAscending = (name) => sortableProperties.isAscendingByName(name);
   this.getSortedProperty = () => sortableProperties.getSortedProperty();
+
+  $scope.isFullScreenMode = !chrome.getVisible();
 
   this.sortOn = function sortOn(propertyName) {
     sortableProperties.sortOn(propertyName);

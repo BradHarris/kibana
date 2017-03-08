@@ -366,6 +366,12 @@ app.directive('dashboardApp', function ($injector) {
       };
 
       $scope.$emit('application.load');
+
+      // init();
+
+      // $scope.showEditHelpText = () => {
+      //   return !$scope.state.panels.length && chrome.getVisible();
+      // };
     }
   };
 });
