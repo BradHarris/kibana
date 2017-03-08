@@ -659,8 +659,6 @@ body {
   -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  min-height: 70px;
-  /* 1 */
   color: #2d2d2d;
   background-color: #e4e4e4; }
   .theme-dark .kuiLocalNav {

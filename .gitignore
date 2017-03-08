@@ -8,6 +8,7 @@ trash
 /optimize/bundles
 /optimize/testdev
 /optimize/testUiServer
+/optimize/.webpack.babelcache
 target
 /build
 .jruby

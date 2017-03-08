@@ -6,6 +6,7 @@ import uiModules from 'ui/modules';
 import { PanelUtils } from 'plugins/kibana/dashboard/components/panel/lib/panel_utils';
 
 const app = uiModules.get('app/dashboard');
+const isEmbedded = window.self === window.top;
 
 app.directive('dashboardGrid', function ($compile, Notifier) {
   return {
@@ -60,7 +61,7 @@ app.directive('dashboardGrid', function ($compile, Notifier) {
           min_cols: COLS,
           autogenerate_stylesheet: false,
           resize: {
-            enabled: true,
+            enabled: isEmbedded,
             stop: readGridsterChangeHandler
           },
           draggable: {
@@ -72,10 +73,14 @@ app.directive('dashboardGrid', function ($compile, Notifier) {
         // This is necessary to enable text selection within gridster elements
         // http://stackoverflow.com/questions/21561027/text-not-selectable-from-editable-div-which-is-draggable
         binder.jqOn($el, 'mousedown', function () {
-          gridster.disable().disable_resize();
+          if (isEmbedded) {
+            gridster.disable().disable_resize();
+          }
         });
         binder.jqOn($el, 'mouseup', function enableResize() {
-          gridster.enable().enable_resize();
+          if (isEmbedded) {
+            gridster.enable().enable_resize();
+          }
         });
 
         $scope.$watchCollection('state.panels', function (panels) {
@@ -203,7 +208,7 @@ app.directive('dashboardGrid', function ($compile, Notifier) {
         const g = gridster;
 
         g.options.widget_margins = [SPACER / 2, SPACER / 2];
-        g.options.widget_base_dimensions = [($container.width() - spacerSize) / COLS, 100];
+        g.options.widget_base_dimensions = [($container.width() - 20 - spacerSize) / COLS, 100];
         g.min_widget_width  = (g.options.widget_margins[0] * 2) + g.options.widget_base_dimensions[0];
         g.min_widget_height = (g.options.widget_margins[1] * 2) + g.options.widget_base_dimensions[1];
 

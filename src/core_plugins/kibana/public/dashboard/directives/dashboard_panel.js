@@ -79,6 +79,7 @@ uiModules
         // These could be done in loadPanel, putting them here to make them more explicit
         $scope.savedObj = panelConfig.savedObj;
         $scope.editUrl = panelConfig.editUrl;
+        $scope.title = _.get(panelConfig, 'savedObj.visState.title', '');
 
         element.on('$destroy', function () {
           panelConfig.savedObj.destroy();
