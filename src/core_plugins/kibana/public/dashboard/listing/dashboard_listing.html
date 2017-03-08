@@ -12,7 +12,10 @@
   </div>
 </kbn-top-nav>
 
-<div class="kuiViewContent kuiViewContent--constrainedWidth">
+<div
+  ng-show="!isFullScreenMode"
+  class="kuiViewContent kuiViewContent--constrainedWidth"
+>
   <!-- ControlledTable -->
   <div class="kuiViewContentItem kuiControlledTable kuiVerticalRhythm">
     <!-- ToolBar -->

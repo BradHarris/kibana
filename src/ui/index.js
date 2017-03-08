@@ -74,6 +74,7 @@ export default async (kbnServer, server, config) => {
       basePath: config.get('server.basePath'),
       serverName: config.get('server.name'),
       devMode: config.get('env.dev'),
+      postMessageTarget: config.get('uiSettings.postMessageTarget'),
       uiSettings: await props({
         defaults: uiSettings.getDefaults(),
         user: includeUserProvidedConfig && uiSettings.getUserProvided(request)
