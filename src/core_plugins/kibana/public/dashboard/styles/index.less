@@ -13,7 +13,10 @@
 dashboard-grid {
   display: block;
   margin: 0;
-  padding: 5px;
+  padding: 5px 20px 5px 5px;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .start-screen {
@@ -39,6 +42,8 @@ dashboard-grid {
   }
 
   .gs-w {
+    border: none;
+    padding: 10px 5px 5px 10px;
 
     &:hover {
 
@@ -77,6 +82,8 @@ dashboard-grid {
   flex: 1;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  overflow: hidden;
 }
 
 /**
@@ -91,9 +98,12 @@ dashboard-panel {
   height: 100%;
   background: @dashboard-panel-bg;
   color: @dashboard-panel-color;
-  padding: 0;
-  overflow: auto; /* 1 */
+  // padding: 0;
+  // overflow: auto; /* 1 */
+  padding: 6px;
+  overflow: hidden;
   position: relative;
+  border: 1px solid #cfcfcf;
 
   .panel {
     margin: 0;
@@ -122,6 +132,8 @@ dashboard-panel {
         // flexbox fix for IE10
         // http://stackoverflow.com/questions/22008135/internet-explorer-10-does-not-apply-flexbox-on-inline-elements
         display: inline-block;
+        color: #333;
+        font-weight: 600;
 
         .ellipsis();
         flex: 1 1 auto;
